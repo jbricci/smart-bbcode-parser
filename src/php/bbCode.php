@@ -704,6 +704,60 @@ class bbCode
 
 	/* private functions below this */
 
+	private function color_parser ( &$color )
+	{
+		$color = strtolower ( trim ( $color ) );
+
+		if ( isset ( $this->allowed_colors[$color] ) )
+		{
+			$color = $this->allowed_colors[$color];
+
+			return TRUE;
+		}
+		elseif ( $this->allow_hex_colors && substr ( $color, 0, 1 ) == '#' )
+		{
+			$color = ltrim ( substr ( $color, 1 ) );
+
+			if ( ctype_xdigit ( $color ) && ( strlen ( $color ) == 3 || strlen ( $color ) == 6 ) )
+			{
+				$color = '#' . $color;
+
+				return TRUE;
+			}
+			else
+			{
+				$color = $this->default_color;
+
+				return FALSE;
+			}
+		}
+		elseif ( $this->allow_rgb_colors && substr_count ( $color, ',' ) == 2 )
+		{
+			$color = array_map ( 'trim', explode ( ',', $color ) );
+
+			foreach ( $color AS $rgb )
+			{
+				if ( ( integer ) $rgb < 0 || ( integer ) $rgb > 255 )
+				{
+					$color = $this->default_color;
+
+					return FALSE;
+				}
+			}
+
+			$color = '#' . dechex ( ( $color[0] << 16 ) | ( $color[1] << 8 ) | $color[2] );
+
+			return TRUE;
+		}
+		else
+		{
+			$color = $this->default_color;
+
+			return FALSE;
+		}
+	}
+
+
 	private function size_parser ( &$size )
 	{
 		$size = strtolower ( trim ( $size ) );
