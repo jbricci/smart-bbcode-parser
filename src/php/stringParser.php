@@ -38,19 +38,19 @@ class stringParser extends bbCode
 		{
 			switch ( $handleChange )
 			{
-				case 1: // start looking for the next possibile tag
+				case 1: // start looking for the next possibile bbcode tag
 
 				break;
 
-				case 2: // closing tag || opening tag without option ( possibile )
+				case 2: // a closing bbcode tag || a opening bbcode tag without an option
 
 				break;
 
-				case 3: // text within tag
+				case 3: // text within bbcode tag
 
 				break;
 
-				case 4: // opening tag with option ( possibile )
+				case 4: // a opening bbcode tag with an option
 
 				break;
 			}

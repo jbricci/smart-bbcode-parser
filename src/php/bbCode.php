@@ -31,20 +31,20 @@ class bbCode
 
 	/*
 	*
-	* @name ( convert_tags ), @value ( boolean ), @access ( protected )
+	* @name ( invalid_tags ), @value ( string ), @access ( protected )
 	*
-	* should the class parser ( convert || remove ) all bbcode tag(s) that
-	* are found to be invalid to ( text ) or just remove those tags!
+	* should the class parser ( convert ) all bbcode tag(s) that
+	* are found to be invalid to text or just ( remove ) those tags!
 	*
-	* TRUE = convert all ( unknown || invalid ) bbcode tag(s) to ( text )
+	* convert = convert all ( invalid ) bbcode tag(s) to text
 	*
-	* FALSE = always delete, remove all ( unknown || invalid ) bbcode tag(s)
+	* remove = remove all ( invalid ) bbcode tag(s)
 	*
-	* @access ( public ), allowed through... set_convert_tags ();
+	* @access ( public ), allowed through... set_invalid_tags ();
 	*
 	*/
 
-	protected $convert_tags = FALSE;
+	protected $invalid_tags = 'remove';
 
 
 	/*
@@ -487,16 +487,16 @@ class bbCode
 	}
 
 
-	public function set_delete_bogus_tags ( $bool = TRUE )
+	public function set_invalid_tags ( $string = 'remove' )
 	{
-		if ( is_bool ( $bool ) )
+		if ( in_array ( $string, array ( 'convert', 'remove' ) ) )
 		{
-			$this->convert_tags = $bool;
+			$this->invalid_tags = $string;
 		}
 	}
 
 
-	public function set_remove_empty_tags ( $bool = TRUE )
+	public function set_remove_tags ( $bool = TRUE )
 	{
 		if ( is_bool ( $bool ) )
 		{
